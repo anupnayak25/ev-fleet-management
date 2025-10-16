@@ -4,12 +4,32 @@ const { requireAuth } = require("../middleware/auth");
 
 const router = express.Router();
 
-// GET /api/fleets
+// GET /api/fleets?page=1&pageSize=10
 router.get("/", requireAuth, async (req, res, next) => {
   try {
-    const { data, error } = await supabase.from("fleets").select("*").order("created_at", { ascending: false });
+    const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
+    const pageSizeRaw = parseInt(req.query.pageSize, 10) || 10;
+    const pageSize = Math.min(Math.max(pageSizeRaw, 1), 100); // clamp 1..100
+    const from = (page - 1) * pageSize;
+    const to = from + pageSize - 1;
+
+    const { data, error, count } = await supabase
+      .from("fleets")
+      .select("*", { count: "exact" })
+      .order("created_at", { ascending: false })
+      .range(from, to);
     if (error) return next(error);
-    res.json(data);
+
+    res.set("X-Total-Count", String(count ?? 0));
+    return res.json({
+      data,
+      pagination: {
+        page,
+        pageSize,
+        total: count ?? 0,
+        totalPages: count ? Math.ceil(count / pageSize) : 0,
+      },
+    });
   } catch (err) {
     next(err);
   }

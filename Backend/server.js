@@ -4,8 +4,8 @@ const morgan = require("morgan");
 const path = require("path");
 const dotenv = require("dotenv");
 
-// Load env from project root .env if present
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+// Load env 
+dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
