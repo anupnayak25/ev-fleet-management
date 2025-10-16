@@ -1,0 +1,271 @@
+{
+  "info": {
+    "name": "EV Fleet Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "a3c6b8b6-0d9a-4f3d-9e05-cc5a2f7d93d0"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "signup"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"helloworld@gmail.com\",\n  \"password\": \"Passw0rd!\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "const token = json?.session?.access_token;",
+                  "if (token) { pm.environment.set('accessToken', token); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"helloworld@gmail.com\",\n  \"password\": \"Passw0rd!\"\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Fleets",
+      "item": [
+        {
+          "name": "List Fleets",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/fleets", "host": ["{{baseUrl}}"], "path": ["api", "fleets"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Fleet",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/fleets", "host": ["{{baseUrl}}"], "path": ["api", "fleets"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Gamma Mobility\",\n  \"location\": \"Seattle, WA\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Fleet",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/fleets/{{fleetId}}", "host": ["{{baseUrl}}"], "path": ["api", "fleets", "{{fleetId}}"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"location\": \"Portland, OR\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Fleet",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/fleets/{{fleetId}}", "host": ["{{baseUrl}}"], "path": ["api", "fleets", "{{fleetId}}"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Vehicles",
+      "item": [
+        {
+          "name": "List Vehicles (all)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/vehicles", "host": ["{{baseUrl}}"], "path": ["api", "vehicles"] }
+          },
+          "response": []
+        },
+        {
+          "name": "List Vehicles (by fleetId)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/vehicles?fleetId={{fleetId}}", "host": ["{{baseUrl}}"], "path": ["api", "vehicles"], "query": [{"key":"fleetId","value":"{{fleetId}}"}] }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Vehicle",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/vehicles", "host": ["{{baseUrl}}"], "path": ["api", "vehicles"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner\": \"Alpha Logistics\",\n  \"model\": \"Hyundai Kona\",\n  \"registrationNumber\": \"ALF-KONA-003\",\n  \"fleetId\": \"{{fleetId}}\"\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Vehicle",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/vehicles/{{vehicleId}}", "host": ["{{baseUrl}}"], "path": ["api", "vehicles", "{{vehicleId}}"] },
+            "body": { "mode": "raw", "raw": "{\n  \"model\": \"Hyundai Ioniq 6\"\n}" }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Vehicle",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/vehicles/{{vehicleId}}", "host": ["{{baseUrl}}"], "path": ["api", "vehicles", "{{vehicleId}}"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Charging Sessions",
+      "item": [
+        {
+          "name": "List Sessions (all)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/sessions", "host": ["{{baseUrl}}"], "path": ["api", "sessions"] }
+          },
+          "response": []
+        },
+        {
+          "name": "List Sessions (by vehicleId)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/sessions?vehicleId={{vehicleId}}", "host": ["{{baseUrl}}"], "path": ["api", "sessions"], "query": [{"key":"vehicleId","value":"{{vehicleId}}"}] }
+          },
+          "response": []
+        },
+        {
+          "name": "List Sessions (by fleetId)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/sessions?fleetId={{fleetId}}", "host": ["{{baseUrl}}"], "path": ["api", "sessions"], "query": [{"key":"fleetId","value":"{{fleetId}}"}] }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/sessions", "host": ["{{baseUrl}}"], "path": ["api", "sessions"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fleetId\": \"{{fleetId}}\",\n  \"vehicleId\": \"{{vehicleId}}\",\n  \"startTime\": \"2025-10-13T10:00:00.000Z\",\n  \"endTime\": \"2025-10-13T10:45:00.000Z\",\n  \"energyUsed\": 18.2,\n  \"batteryStatus\": { \n    \"soc_start\": 30, \n    \"soc_end\": 85 \n  }\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Session",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/sessions/{{sessionId}}", "host": ["{{baseUrl}}"], "path": ["api", "sessions", "{{sessionId}}"] },
+            "body": { "mode": "raw", "raw": "{\n  \"energyUsed\": 20.0\n}" }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Session",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/sessions/{{sessionId}}", "host": ["{{baseUrl}}"], "path": ["api", "sessions", "{{sessionId}}"] }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": []
+}
