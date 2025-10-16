@@ -22,7 +22,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"helloworld@gmail.com\",\n  \"password\": \"Passw0rd!\"\n}"
+              "raw": "{\n  \"email\": \"tester@example.com\",\n  \"password\": \"Passw0rd!\"\n}"
             }
           },
           "response": []
@@ -54,7 +54,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"helloworld@gmail.com\",\n  \"password\": \"Passw0rd!\"\n}"
+              "raw": "{\n  \"email\": \"tester@example.com\",\n  \"password\": \"Passw0rd!\"\n}"
             }
           },
           "response": []
@@ -65,13 +65,16 @@
       "name": "Fleets",
       "item": [
         {
-          "name": "List Fleets",
+          "name": "List Fleets (paged)",
           "request": {
             "method": "GET",
             "header": [
               { "key": "Authorization", "value": "Bearer {{accessToken}}" }
             ],
-            "url": { "raw": "{{baseUrl}}/api/fleets", "host": ["{{baseUrl}}"], "path": ["api", "fleets"] }
+            "url": { "raw": "{{baseUrl}}/api/fleets?page={{page}}&pageSize={{pageSize}}", "host": ["{{baseUrl}}"], "path": ["api", "fleets"], "query": [
+              {"key":"page","value":"{{page}}"},
+              {"key":"pageSize","value":"{{pageSize}}"}
+            ] }
           },
           "response": []
         },
@@ -124,13 +127,16 @@
       "name": "Vehicles",
       "item": [
         {
-          "name": "List Vehicles (all)",
+          "name": "List Vehicles (paged)",
           "request": {
             "method": "GET",
             "header": [
               { "key": "Authorization", "value": "Bearer {{accessToken}}" }
             ],
-            "url": { "raw": "{{baseUrl}}/api/vehicles", "host": ["{{baseUrl}}"], "path": ["api", "vehicles"] }
+            "url": { "raw": "{{baseUrl}}/api/vehicles?page={{page}}&pageSize={{pageSize}}", "host": ["{{baseUrl}}"], "path": ["api", "vehicles"], "query": [
+              {"key":"page","value":"{{page}}"},
+              {"key":"pageSize","value":"{{pageSize}}"}
+            ] }
           },
           "response": []
         },
@@ -191,13 +197,16 @@
       "name": "Charging Sessions",
       "item": [
         {
-          "name": "List Sessions (all)",
+          "name": "List Sessions (paged)",
           "request": {
             "method": "GET",
             "header": [
               { "key": "Authorization", "value": "Bearer {{accessToken}}" }
             ],
-            "url": { "raw": "{{baseUrl}}/api/sessions", "host": ["{{baseUrl}}"], "path": ["api", "sessions"] }
+            "url": { "raw": "{{baseUrl}}/api/sessions?page={{page}}&pageSize={{pageSize}}", "host": ["{{baseUrl}}"], "path": ["api", "sessions"], "query": [
+              {"key":"page","value":"{{page}}"},
+              {"key":"pageSize","value":"{{pageSize}}"}
+            ] }
           },
           "response": []
         },
