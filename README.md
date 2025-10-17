@@ -6,7 +6,7 @@ Node.js + Express REST API for managing EV fleets, vehicles, and charging sessio
 - Runtime: Node.js (Express)
 - Database: Supabase Postgres
 - Auth: Supabase Auth (email/password)
-- SQL: `Backend/db/schema.sql` (tables, RLS policies, seed data)
+- PostgreSQL: `Backend/db/schema.sql` (tables, RLS policies, seed data)
 - API Docs/Test: Postman collection (optional)
 
 ## Core Entities
@@ -47,7 +47,7 @@ Authorization: Bearer <access_token>
 
 ## Project Structure (reference)
 ```
-ev-fleet-management-api/
+ev-fleet-management/
 ├─ Backend/
 │  ├─ src/
 │  │  ├─ index.ts                  # Express app bootstrap
