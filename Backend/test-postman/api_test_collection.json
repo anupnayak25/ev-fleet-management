@@ -4,6 +4,12 @@
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_postman_id": "a3c6b8b6-0d9a-4f3d-9e05-cc5a2f7d93d0"
   },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{accessToken}}", "type": "string" }
+    ]
+  },
   "item": [
     {
       "name": "Auth",
